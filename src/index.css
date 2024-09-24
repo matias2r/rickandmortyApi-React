@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  font: 112.5% / 1.625 -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(32, 35, 41);
+  }
+  
+
+  ::selection {
+    background: rgb(32, 35, 41);
+    color: orange;
+  }
+  
+  ::-moz-selection {
+    background: rgb(32, 35, 41);
+    color: orange;
+  }
+
+  @keyframes pulseGreen {
+    0%, 100% { transform: scale(.8); box-shadow: 0 0 3px 2px rgba(34,197,94,0.5); }
+    50% { transform: scale(1); box-shadow: 0 0 5px 1px rgba(34,197,94,0.7); }
+  }
+
+  @keyframes pulseRed {
+    0%, 100% { transform: scale(.8); box-shadow: 0 0 3px 2px rgba(239,68,68,0.5); }
+    50% { transform: scale(1); box-shadow: 0 0 5px 1px rgba(239,68,68,0.7); }
+  }
+
+  .animate-pulse-green {
+    animation: pulseGreen 1.5s infinite;
+  }
+
+  .animate-pulse-red {
+    animation: pulseRed 1.5s infinite;
+  }
+
