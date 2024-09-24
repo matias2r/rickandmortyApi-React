@@ -5,6 +5,7 @@ const CharacterList = () => {
   const [allCharacters, setAllCharacters] = useState([]);
   const [searchCharacter, setSearchCharacter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const charactersPerPage = 10; // Personajes por Pagina
 
   // Funcion para obtener todos los personajes de la API
@@ -84,6 +85,17 @@ const CharacterList = () => {
           </span>
       </div>
 
+
+      {loading ? (
+        <div className="flex flex-col items-center justify-center">
+        <span className="mb-2 text-white font-bold">Loading Characters...</span>
+        <img 
+          src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3k3cDlsYjlteDQ5MXU5b3lhbjZqOHVuaTQ0ZmVwMWVoZ3I1MzZkNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/kyKuZzsa6bShl3SaHe/giphy.webp" 
+          className="w-40"
+        />
+      </div>
+
+      ) : (
       <div className="max-w-screen-lg mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 ">
   {currentCharacters.map(item => (
     <div key={item.id} className="bg-zinc-700 rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow flex flex-col items-center sm:items-stretch">
@@ -110,9 +122,10 @@ const CharacterList = () => {
         </div>
       </div>
     </div>
-    
+  
   ))}
 </div>
+)}
 
       <div className="flex justify-center mt-10 space-x-4 mb-10">
         <button onClick={prevPage} className="bg-orange-500 font-bold text-white py-2 px-4 rounded disabled:opacity-50 hover:bg-orange-700 transition duration-300" disabled={currentPage === 1}>Previous</button>
