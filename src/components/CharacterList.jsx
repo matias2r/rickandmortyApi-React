@@ -34,6 +34,25 @@ const CharacterList = () => {
     character.name.toLowerCase().includes(searchCharacter.toLowerCase())
   );
 
+  // Calcula el indice de paginacion (Primer y ultimo indice)
+  const indexOfLastCharacter = currentPage * charactersPerPage; 
+  const indexOfFirstCharacter = indexOfLastCharacter - charactersPerPage; 
+  const currentCharacters = filteredCharacters.slice(indexOfFirstCharacter, indexOfLastCharacter);
+
+  // Cambiar pagina de listado de personajes
+  const nextPage = () => {
+    if (currentPage < Math.ceil(filteredCharacters.length / charactersPerPage)) {
+      setCurrentPage(prev => prev + 1);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prev => prev - 1);
+      window.scrollTo(0, 0);
+    }
+  };
 
   return (
     <>
@@ -68,6 +87,11 @@ const CharacterList = () => {
     </div>
   ))}
 </div>
+
+      <div className="flex justify-center mt-10 space-x-4 mb-10">
+        <button onClick={prevPage} className="bg-orange-500 font-bold text-white py-2 px-4 rounded disabled:opacity-50 hover:bg-orange-800 transition duration-300" disabled={currentPage === 1}>Previous</button>
+        <button onClick={nextPage} className="bg-orange-500 font-bold text-white py-2 px-4 rounded disabled:opacity-50 hover:bg-orange-800 transition duration-300" disabled={currentPage >= Math.ceil(filteredCharacters.length / charactersPerPage)}>Next</button>
+      </div>
 
       <div className="flex flex-col justify-center items-center mt-10 mb-20 font-semibold">
          <a href="https://github.com/matias2r/rickandmortyApi-React" target="_blank" rel="noopener noreferrer">
