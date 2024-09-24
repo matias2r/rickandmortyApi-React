@@ -30,9 +30,15 @@ const CharacterList = () => {
   }, []);
 
   // Filtrar personajes
-  const filteredCharacters = allCharacters.filter(character =>
-    character.name.toLowerCase().includes(searchCharacter.toLowerCase())
-  );
+  const filteredCharacters = allCharacters.filter(character => character.name.toLowerCase().includes(searchCharacter.toLowerCase()));
+
+  // Filtrar locaciones
+  const locations = Array.from(new Set(filteredCharacters.map(character => character.location.name)));
+
+  // Filtrar episodios
+  const episodes = Array.from(new Set(filteredCharacters.flatMap(character => character.episode.map(ep => ep.split('/').pop()))));
+
+
 
   // Calcula el indice de paginacion (Primer y ultimo indice)
   const indexOfLastCharacter = currentPage * charactersPerPage; 
@@ -65,7 +71,22 @@ const CharacterList = () => {
         </div>
       <CharacterSearch searchCharacter={searchCharacter} setSearchCharacter={setSearchCharacter}/>
 
-      <div className="max-w-screen-lg mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+
+      <div className="flex justify-center mt-10 space-x-4 mb-10 text-center text-sm font-semibold text-white mb-4">
+          <span className='text-zinc-400 uppercase font-bold hover:text-orange-500 transition duration-300'>
+            <a href="https://rickandmortyapi.com/api/character" target="_blank" rel="noopener noreferrer">Total Characters: {filteredCharacters.length}</a>
+          </span>
+
+          <span className='text-zinc-400 uppercase font-bold hover:text-orange-500 transition duration-300'>
+            <a href="https://rickandmortyapi.com/api/location" target="_blank" rel="noopener noreferrer">Total Locations: {locations.length}</a>
+          </span>
+          
+          <span className='text-zinc-400 uppercase font-bold hover:text-orange-500 transition duration-300'>
+            <a href="https://rickandmortyapi.com/api/episode" target="_blank" rel="noopener noreferrer">Total Episodes: {episodes.length}</a>
+          </span>
+      </div>
+
+      <div className="max-w-screen-lg mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 ">
   {currentCharacters.map(item => (
     <div key={item.id} className="bg-zinc-700 rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow flex flex-col items-center sm:items-stretch">
       <img src={item.image} alt={item.name} className="w-full h-48 object-cover rounded-lg mb-4" />
@@ -87,9 +108,11 @@ const CharacterList = () => {
           <span className="block text-lg text-white font-semibold hover:text-orange-500"><a href={item.location.url}>{item.location.name}</a></span>
           <span className="block text-md text-zinc-400 font-semibold ">Origin:</span>
           <span className="block text-lg text-white font-semibold hover:text-orange-500"><a href={item.origin.url}>{item.origin.name}</a></span>
+
         </div>
       </div>
     </div>
+    
   ))}
 </div>
 
@@ -110,6 +133,8 @@ const CharacterList = () => {
           ❮❯ by <a href="https://github.com/matias2r" target="_blank" rel="noopener noreferrer" className='text-white hover:text-orange-500 transition duration-200'>Matias Espinoza</a> 2024
         </span>
       </div>
+
+
 
     </>
   );
