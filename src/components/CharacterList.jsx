@@ -27,7 +27,12 @@ const CharacterList = () => {
   };
 
   useEffect(() => {
-    fetchAllCharacters();
+    const fetchCharacters = async () => {
+      await fetchAllCharacters();
+      setLoading(false);
+    };
+  
+    fetchCharacters();
   }, []);
 
   // Filtrar personajes
