@@ -57,7 +57,12 @@ const CharacterList = () => {
   return (
     <>
       <h1 className="text-center text-2xl font-bold mb-10 mt-20 text-white">Rick And Morty Characters API</h1>
-
+        <div className='flex justify-center mt-10 space-x-4 mb-10'>
+        <a className='bg-orange-500 font-bold text-white py-2 px-4 rounded disabled:opacity-50 hover:bg-orange-700 transition duration-300'
+           href='https://rickandmortyapi.com/documentation' target="_blank" rel="noopener noreferrer">
+          <span>View Docs from Official Website's API</span>
+        </a>
+        </div>
       <CharacterSearch searchCharacter={searchCharacter} setSearchCharacter={setSearchCharacter}/>
 
       <div className="max-w-screen-lg mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
@@ -89,8 +94,8 @@ const CharacterList = () => {
 </div>
 
       <div className="flex justify-center mt-10 space-x-4 mb-10">
-        <button onClick={prevPage} className="bg-orange-500 font-bold text-white py-2 px-4 rounded disabled:opacity-50 hover:bg-orange-800 transition duration-300" disabled={currentPage === 1}>Previous</button>
-        <button onClick={nextPage} className="bg-orange-500 font-bold text-white py-2 px-4 rounded disabled:opacity-50 hover:bg-orange-800 transition duration-300" disabled={currentPage >= Math.ceil(filteredCharacters.length / charactersPerPage)}>Next</button>
+        <button onClick={prevPage} className="bg-orange-500 font-bold text-white py-2 px-4 rounded disabled:opacity-50 hover:bg-orange-700 transition duration-300" disabled={currentPage === 1}>Previous</button>
+        <button onClick={nextPage} className="bg-orange-500 font-bold text-white py-2 px-4 rounded disabled:opacity-50 hover:bg-orange-700 transition duration-300" disabled={currentPage >= Math.ceil(filteredCharacters.length / charactersPerPage)}>Next</button>
       </div>
 
       <div className="flex flex-col justify-center items-center mt-10 mb-20 font-semibold">
@@ -102,7 +107,7 @@ const CharacterList = () => {
           />
         </a>
         <span className='text-zinc-400'>
-          ❮❯ by <a href="https://github.com/matias2r" target="_blank" rel="noopener noreferrer" className='text-white'>Matias Espinoza</a> 2024
+          ❮❯ by <a href="https://github.com/matias2r" target="_blank" rel="noopener noreferrer" className='text-white hover:text-orange-500 transition duration-200'>Matias Espinoza</a> 2024
         </span>
       </div>
 
