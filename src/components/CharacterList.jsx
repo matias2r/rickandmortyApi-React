@@ -33,12 +33,10 @@ const CharacterList = () => {
   const filteredCharacters = allCharacters.filter(character => character.name.toLowerCase().includes(searchCharacter.toLowerCase()));
 
   // Filtrar locaciones
-  const locations = Array.from(new Set(filteredCharacters.map(character => character.location.name)));
+  const filteredLocations = Array.from(new Set(filteredCharacters.map(character => character.location.name)));
 
   // Filtrar episodios
-  const episodes = Array.from(new Set(filteredCharacters.flatMap(character => character.episode.map(ep => ep.split('/').pop()))));
-
-
+  const filteredEpisodes = Array.from(new Set(filteredCharacters.flatMap(character => character.episode.map(ep => ep.split('/').pop()))));
 
   // Calcula el indice de paginacion (Primer y ultimo indice)
   const indexOfLastCharacter = currentPage * charactersPerPage; 
@@ -78,11 +76,11 @@ const CharacterList = () => {
           </span>
 
           <span className='text-zinc-400 uppercase font-bold hover:text-orange-500 transition duration-300'>
-            <a href="https://rickandmortyapi.com/api/location" target="_blank" rel="noopener noreferrer">Total Locations: {locations.length}</a>
+            <a href="https://rickandmortyapi.com/api/location" target="_blank" rel="noopener noreferrer">Total Locations: {filteredLocations.length}</a>
           </span>
-          
+
           <span className='text-zinc-400 uppercase font-bold hover:text-orange-500 transition duration-300'>
-            <a href="https://rickandmortyapi.com/api/episode" target="_blank" rel="noopener noreferrer">Total Episodes: {episodes.length}</a>
+            <a href="https://rickandmortyapi.com/api/episode" target="_blank" rel="noopener noreferrer">Total Episodes: {filteredEpisodes.length}</a>
           </span>
       </div>
 
