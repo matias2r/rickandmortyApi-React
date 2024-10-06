@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import CharacterSearch from './CharacterSearch';
+import CharacterModal from './CharacterModal';
 
 const CharacterList = () => {
   const [allCharacters, setAllCharacters] = useState([]);
   const [searchCharacter, setSearchCharacter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const charactersPerPage = 10; // Personajes por Pagina
+  const [isCharacterModalOpen, setCharacterModalOpen] = useState(false)
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const charactersPerPage = 12; // Personajes por Pagina
 
   // Funcion para obtener todos los personajes de la API
   const fetchAllCharacters = async () => {
@@ -34,6 +37,7 @@ const CharacterList = () => {
   
     fetchCharacters();
   }, []);
+
 
   // Filtrar personajes
   const filteredCharacters = allCharacters.filter(character => character.name.toLowerCase().includes(searchCharacter.toLowerCase()));
@@ -64,6 +68,16 @@ const CharacterList = () => {
     }
   };
 
+  const handleOpenModalCharacter = (character) => {
+    setSelectedCharacter(character)
+    setCharacterModalOpen(true)
+  }
+
+  const handleCloseModalCharacter = () => {
+    setCharacterModalOpen(false)
+    setSelectedCharacter(null)
+  }
+
   return (
     <>
       <h1 className="text-center text-2xl font-bold mb-10 mt-20 text-white">Rick And Morty Characters API</h1>
@@ -90,6 +104,9 @@ const CharacterList = () => {
           </span>
       </div>
 
+      <div className='flex justify-center text-white font-semibold'>
+        <span>More information: Press the name of the characters.</span>
+      </div>
 
       {loading ? (
         <div className="flex flex-col items-center justify-center">
@@ -107,23 +124,28 @@ const CharacterList = () => {
       <img src={item.image} alt={item.name} className="w-full h-48 object-cover rounded-lg mb-4" />
       <div className="text-center sm:text-left">
         <h2 className="text-xl font-extrabold text-white mb-2">
-          <a href={`https://rickandmortyapi.com/api/character/${item.id}`} className='hover:text-orange-500'>
+          <a onClick={() => handleOpenModalCharacter(item)} className='hover:text-orange-500 cursor-pointer'>
             {item.name}
           </a>
         </h2>
         <div className="space-y-2">
           <div className="flex justify-center sm:justify-start items-center">
             <div
-              className={`w-2.5 h-2.5 rounded-full ${item.status === 'Alive' ? 'bg-green-500 shadow-[0_0_10px_2px_rgba(34,197,94,0.5)] animate-pulse-green' : 'bg-red-500 shadow-[0_0_10px_2px_rgba(239,68,68,0.5)] animate-pulse-red'}`}
+              className={`w-2.5 h-2.5 rounded-full ${item.status === 'Alive' ? 'bg-green-500 shadow-md animate-pulse-green' 
+              : item.status === 'Dead' ? 'bg-red-500 shadow-md animate-pulse-red'
+              : 'bg-zinc-500 shadow-md'} `}
               title={item.status} // Muestra el estado al pasar el mouse
             ></div>
             <span className="ml-2 text-sm text-white font-semibold">{item.status} - {item.species}</span>
           </div>
-          <span className="block text-md text-zinc-400 font-semibold ">Last known location:</span>
-          <span className="block text-lg text-white font-semibold hover:text-orange-500"><a href={item.location.url}>{item.location.name}</a></span>
-          <span className="block text-md text-zinc-400 font-semibold ">Origin:</span>
-          <span className="block text-lg text-white font-semibold hover:text-orange-500"><a href={item.origin.url}>{item.origin.name}</a></span>
-
+          
+            {isCharacterModalOpen && (
+              <CharacterModal
+                isOpen={isCharacterModalOpen}
+                onClose={handleCloseModalCharacter}
+                character={selectedCharacter}
+              />
+            )}
         </div>
       </div>
     </div>
@@ -136,22 +158,6 @@ const CharacterList = () => {
         <button onClick={prevPage} className="bg-orange-500 font-bold text-white py-2 px-4 rounded disabled:opacity-50 hover:bg-orange-700 transition duration-300" disabled={currentPage === 1}>Previous</button>
         <button onClick={nextPage} className="bg-orange-500 font-bold text-white py-2 px-4 rounded disabled:opacity-50 hover:bg-orange-700 transition duration-300" disabled={currentPage >= Math.ceil(filteredCharacters.length / charactersPerPage)}>Next</button>
       </div>
-
-      <div className="flex flex-col justify-center items-center mt-10 mb-20 font-semibold">
-         <a href="https://github.com/matias2r/rickandmortyApi-React" target="_blank" rel="noopener noreferrer">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
-            className="filter invert w-5 mb-2" 
-            alt="GitHub Icon" 
-          />
-        </a>
-        <span className='text-zinc-400'>
-          ❮❯ by <a href="https://github.com/matias2r" target="_blank" rel="noopener noreferrer" className='text-white hover:text-orange-500 transition duration-200'>Matias Espinoza</a> 2024
-        </span>
-      </div>
-
-
-
     </>
   );
 };
