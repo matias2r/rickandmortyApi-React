@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CharacterSearch = ({ searchCharacter, setSearchCharacter }) => {
+const CharacterSearch = ({ searchharacter, setSearchCharacter }) => {
   return (
     <div className="flex justify-center mb-6">
       <div className="w-full max-w-md">
